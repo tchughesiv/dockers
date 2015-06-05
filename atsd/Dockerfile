@@ -2,7 +2,6 @@ FROM ubuntu:14.04
 MAINTAINER ATSD Developers <dev-atsd@axibase.com>
 
 #configure system
-#ENV HOSTNAME dockeratsd
 RUN locale-gen en_US.UTF-8
 #create directory for ssh daemon required by openssh-server
 RUN mkdir -p /var/run/sshd
