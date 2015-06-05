@@ -19,6 +19,7 @@ RUN apt-get update
 RUN apt-get install -y atsd; 
 
 EXPOSE 22 8081 8088
+VOLUME ["/opt/atsd"]
 
 ENTRYPOINT /bin/sh -c /opt/atsd/install_user.sh & /usr/sbin/sshd -D
 
