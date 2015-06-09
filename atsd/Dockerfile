@@ -19,6 +19,5 @@ RUN apt-get install -y atsd;
 
 EXPOSE 22 8081 8088
 VOLUME ["/opt/atsd"]
-
 ENTRYPOINT ["/bin/bash","/opt/atsd/bin/start_container.sh"]
 
