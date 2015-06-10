@@ -7,7 +7,7 @@ RUN locale-gen en_US.UTF-8
 RUN mkdir -p /var/run/sshd
 
 #configure users
-RUN adduser --disabled-password --quiet --gecos "" axibase; echo "axibase:axibase" | chpasswd
+RUN adduser --disabled-password --quiet --gecos "" axibase;
 
 #add axibase repository
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys 26AEE425A57967CFB323846008796A6514F3CB79
