@@ -17,6 +17,9 @@ RUN apt-get update
 #install software including dependencies: openjdk-6-jdk, openssh-server, cron, telnet, sysstat, sed, debconf(>= 0.2.26), libc6, passwd, adduser, netcat-openbsd, iproute, net-tools
 RUN apt-get install -y atsd; 
 
+#set hbase distributed mode false
+RUN sed -i '/.*hbase.cluster.distributed.*/{n;s/.*/   <value>false<\/value>/}' /opt/atsd/hbase/conf/hbase-site.xml
+
 EXPOSE 22 8081 8088
 VOLUME ["/opt/atsd"]
 
