@@ -20,7 +20,7 @@ RUN apt-get install -y atsd;
 #set hbase distributed mode false
 RUN sed -i '/.*hbase.cluster.distributed.*/{n;s/.*/   <value>false<\/value>/}' /opt/atsd/hbase/conf/hbase-site.xml
 
-EXPOSE 22 8081 8088
+EXPOSE 22 8081 8088 1883 1099
 VOLUME ["/opt/atsd"]
 
 ENTRYPOINT ["/bin/bash","/opt/atsd/bin/start_container.sh"]
