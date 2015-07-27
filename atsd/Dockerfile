@@ -15,8 +15,6 @@ RUN echo "deb [arch=amd64] http://axibase.com/public/repository/deb/ ./" >> /etc
 RUN apt-get update
 
 #install software including dependencies: openjdk-6-jdk, openssh-server, cron, telnet, sysstat, sed, debconf(>= 0.2.26), libc6, passwd, adduser, netcat-openbsd, iproute, net-tools
-#install openjdk first to update environment before ATSD installation
-RUN apt-get install -y openjdk-6-jdk
 RUN apt-get install -y atsd; 
 
 #set hbase distributed mode false
