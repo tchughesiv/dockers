@@ -15,7 +15,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys 26AEE425A5796
 RUN echo "deb [arch=amd64] http://axibase.com/public/repository/deb/ ./" >> /etc/apt/sources.list
 RUN apt-get update 
 
-#install software including dependencies: openjdk-6-jdk, openssh-server, cron, telnet, sysstat, sed, debconf(>= 0.2.26), libc6, passwd, adduser, netcat-openbsd, iproute, net-tools
+#install ATSD including dependencies
 RUN apt-get install -y atsd=${version}; 
 
 #set hbase distributed mode false
