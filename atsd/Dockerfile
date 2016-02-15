@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 MAINTAINER ATSD Developers <dev-atsd@axibase.com>
-ENV version 12208
+ENV version 12210
 
 #configure system
 RUN locale-gen en_US.UTF-8
