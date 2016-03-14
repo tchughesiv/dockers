@@ -21,8 +21,8 @@ RUN apt-get install -y atsd=${version};
 #set hbase distributed mode false
 RUN sed -i '/.*hbase.cluster.distributed.*/{n;s/.*/   <value>false<\/value>/}' /opt/atsd/hbase/conf/hbase-site.xml
 
-#ssh, jmx, mqtt(plain), atsd(tcp), atsd(udp), pickle, http, https, mqtt(ssl)
-EXPOSE 22 1099 1883 8081 8082/udp 8084 8088 8443 8883
+#ssh, jmx, atsd(tcp), atsd(udp), pickle, http, https
+EXPOSE 22 1099 8081 8082/udp 8084 8088 8443
 VOLUME ["/opt/atsd"]
 
 ENTRYPOINT ["/bin/bash","/opt/atsd/bin/start_container.sh"]
