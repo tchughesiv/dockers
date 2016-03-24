@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 MAINTAINER ATSD Developers <dev-atsd@axibase.com>
-ENV version 12536
+ENV version 12534
 
 #configure system
 RUN locale-gen en_US.UTF-8
@@ -25,5 +25,5 @@ RUN sed -i '/.*hbase.cluster.distributed.*/{n;s/.*/   <value>false<\/value>/}' /
 EXPOSE 22 1099 8081 8082/udp 8084 8088 8443
 VOLUME ["/opt/atsd"]
 
-ENTRYPOINT ["/bin/bash","/opt/atsd/bin/start_container.sh"]
+ENTRYPOINT ["/bin/bash","/opt/atsd/bin/entrypoint.sh"]
 
