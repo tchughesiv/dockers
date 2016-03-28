@@ -3,20 +3,14 @@ MAINTAINER ATSD Developers <dev-atsd@axibase.com>
 ENV version 12557
 
 #configure system
-RUN locale-gen en_US.UTF-8
-#create directory for ssh daemon required by openssh-server
-RUN mkdir -p /var/run/sshd
-
-#configure users
-RUN adduser --disabled-password --quiet --gecos "" axibase;
+RUN locale-gen en_US.UTF-8 \
+  && mkdir -p /var/run/sshd \
+  && adduser --disabled-password --quiet --gecos "" axibase;
 
 #add axibase repository
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys 26AEE425A57967CFB323846008796A6514F3CB79
-RUN echo "deb [arch=amd64] http://axibase.com/public/repository/deb/ ./" >> /etc/apt/sources.list
-RUN apt-get update 
-
-#install ATSD including dependencies
-RUN apt-get install -y atsd=${version}; 
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys 26AEE425A57967CFB323846008796A6514F3CB79 \
+  && echo "deb [arch=amd64] http://axibase.com/public/repository/deb/ ./" >> /etc/apt/sources.list \
+  && apt-get update && apt-get install -y atsd=${version}; 
 
 #set hbase distributed mode false
 RUN sed -i '/.*hbase.cluster.distributed.*/{n;s/.*/   <value>false<\/value>/}' /opt/atsd/hbase/conf/hbase-site.xml
