@@ -1,6 +1,10 @@
 FROM ubuntu:14.04
 MAINTAINER ATSD Developers <dev-atsd@axibase.com>
 ENV version 12557
+LABEL com.axibase.vendor="Axibase Corporation" \
+  com.axibase.product="Axibase Time Series Database" \
+  com.axibase.code="ATSD" \
+  com.axibase.revision="${version}"
 
 #configure system
 RUN locale-gen en_US.UTF-8 \
