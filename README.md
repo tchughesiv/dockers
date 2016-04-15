@@ -7,12 +7,10 @@
 <docker.machine.ip.addr> <hostname>
 ```
 #### Pull image:
-
 ```
 docker pull axibase/hadoop-hbase:2.5.2-1.1.4
 ```
-
 #### Start container:
 ```
-docker run -d --net=host --name=hadoop-hbase-new axibase/hadoop-hbase
+docker run -d --net=host --name="hadoop2.5.2-hbase1.1.4" axibase/hadoop-hbase:2.5.2-1.1.4
 ```
