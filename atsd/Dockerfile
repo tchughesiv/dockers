@@ -9,7 +9,6 @@ LABEL com.axibase.vendor="Axibase Corporation" \
 
 #configure system
 RUN locale-gen en_US.UTF-8 \
-  && mkdir -p /var/run/sshd \
   && adduser --disabled-password --quiet --gecos "" axibase;
 
 #apt-get jobs
