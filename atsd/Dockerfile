@@ -20,8 +20,8 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys 26AEE425A5796
 RUN sed -i '/.*hbase.cluster.distributed.*/{n;s/.*/   <value>false<\/value>/}' /opt/atsd/hbase/conf/hbase-site.xml
 RUN /opt/atsd/install_user.sh && /opt/atsd/bin/atsd-all.sh stop
 
-#ssh, jmx, atsd(tcp), atsd(udp), pickle, http, https
-EXPOSE 22 1099 8081 8082/udp 8084 8088 8443
+#jmx, atsd(tcp), atsd(udp), pickle, http, https
+EXPOSE 1099 8081 8082/udp 8084 8088 8443
 VOLUME ["/opt/atsd"]
 
 ENTRYPOINT ["/bin/bash","/opt/atsd/bin/entrypoint.sh"]
