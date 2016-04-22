@@ -1,32 +1,18 @@
-# Nmon Docker Image
-
-## Start
-
-The following command will start to collect data to ATSD (the ATSD server should be started and listening on specified url and port).
+## docker-image
 
 ```
-docker run -d --name="nmon-atsd-collector" axibase/nmon atsd_server atsd_tcp_port
+git clone https://github.com/rmakulov/docker-image.git
+cd docker-images
 ```
 
-By default, nmon snapshots will be created every 60 seconds during one hour ( totally 60 snapshots ).
-
-To specify the snapshots period and count, you can provide the following environment variables to container:
-
-```
-s - snapshots period (in seconds)
-c - snapshots count
-```
-
-Example:
+Copy content of conf/standard to collectd.conf to collect statistic about host except df and interface plugins (they will be collected for container). 	(1)
+If you want to recieve all statistics from host machine copy conf/extened to collectd.conf.								(2)
 
 ```
-docker run -d -e s=120 -e c=30 --name="nmon-atsd-collector" axibase/nmon atsd_server atsd_tcp_port
+docker build -t "axibase/collectd:5.5.0" .
+docker run -d --pid=host --name=collectd axibase/collectd:5.5.0 --atsd-url=tcp://dockerhost:8081
+# if you choose (2)
+# docker run -d -v /:/`hostname`:ro --pid=host --net=host --name=collectd-test axibase/collectd:5.5.0 --atsd-url=tcp://dockerhost:8081
 ```
 
-To automatically start container after docker-engine restart add `--restart=always` flag:
-
-
-```
-docker run -d --restart=always --name="nmon-atsd-collector" axibase/nmon atsd_server atsd_tcp_port
-```
-
+Details about collectd write_atsd plugin you can find at [write atsd page](https://github.com/axibase/atsd-collectd-plugin)

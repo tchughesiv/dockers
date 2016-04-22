@@ -1,19 +1,17 @@
-#!/bin/sh
-atsdUrl=$1
-atsdPort=$2
+#!/bin/bash
 
-if [ -z $atsdPort ]; then
-    echo usage: /opt/nmon/entrypoint.sh atsd_url atsd_port
-    exit 1
-fi
+set -e
 
-while true; do
-    fn="/opt/nmon/$(date +%y%m%d_%H%M).nmon"
-    pd="$(/opt/nmon/nmon -F $fn -s $s -c $c -T -p)"
-    { echo "nmon p:default e:`hostname` f:`hostname`_file.nmon"; tail -f $fn --pid=$pd; } | nc $atsdUrl $atsdPort
-    if kill -0 $pd 2>/dev/null; then
-        kill -9 $pd
-    fi
-    sleep 10
+while getopts ab:c-: arg; do
+  case $arg in
+    - )  LONG_OPTARG="${OPTARG#*=}"
+         case $OPTARG in
+           atsd-url=?* )  sed -i s,atsd_url,$LONG_OPTARG,g /etc/collectd/collectd.conf;;
+           * )         echo "Illegal option --$OPTARG" >&2; exit 2 ;;
+         esac ;;
+    \? ) exit 2 ;;  # getopts already reported the illegal option
+  esac
 done
+
+exec /usr/sbin/collectd -C /etc/collectd/collectd.conf -f
 
