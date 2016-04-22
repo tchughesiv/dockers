@@ -2,8 +2,8 @@
 
 ```
 git clone https://github.com/axibase/dockers.git
+cd dockers
 git checkout collectd
-cd docker-images
 ```
 
 Copy content of conf/standard to collectd.conf to collect statistic about host except df and interface plugins (they will be collected for container). 	(1)
