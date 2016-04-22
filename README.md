@@ -1,7 +1,8 @@
 ## Collectd Docker Image
 
 ```
-git clone https://github.com/rmakulov/docker-image.git
+git clone https://github.com/axibase/dockers.git
+git checkout collectd
 cd docker-images
 ```
 
