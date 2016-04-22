@@ -1,20 +1,15 @@
 ## Collectd Docker Image
 
+
+If you want to collect statistic about docker host except df and interface plugins (they will be collected for container)
 ```
-git clone https://github.com/axibase/dockers.git
-cd dockers
-git checkout collectd
+sudo docker run -d --pid=host --name=collectd axibase/collectd --atsd-url=tcp://atsd_host:tcp_port --conf=container
 ```
 
-Copy content of conf/standard to collectd.conf to collect statistic about host except df and interface plugins (they will be collected for container). 	(1)
-
-If you want to recieve all statistics from host machine copy conf/extened to collectd.conf.								(2)
+If you want to collect all statistics from docker host
 
 ```
-docker build -t "axibase/collectd" .
-docker run -d --pid=host --name=collectd axibase/collectd --atsd-url=tcp://dockerhost:8081
-# if you choose (2)
-# docker run -d -v /:/`hostname`:ro --pid=host --net=host --name=collectd-test axibase/collectd --atsd-url=tcp://dockerhost:8081
+sudo docker run -d -v /:/`hostname`:ro --pid=host --net=host --name=collectd-host axibase/collectd --atsd-url=tcp://atsd_host:tcp_port --conf=host
 ```
 
 Details about collectd write_atsd plugin you can find at [write atsd page](https://github.com/axibase/atsd-collectd-plugin)
