@@ -45,12 +45,12 @@ Example of command to collect data from Docker-host:
 ```bash
 docker run \
 	-d \
-	-v /etc/localtime:/etc/localtime:ro \
-	-v /:/`hostname`:ro \
-	--name="nmon-atsd-collector" \
-	--pid=host \
-	--privileged \
-	--net=host \
-	--restart=always
-	axibase/nmon atsd_server atsd_tcp_port
+    -v /etc/localtime:/etc/localtime:ro \
+    -v /:/`hostname`:ro \
+    --name="nmon-atsd-collector" \
+    --pid=host \
+    --privileged \
+    --net=host \
+    --restart=always \
+    axibase/nmon atsd_server atsd_tcp_port
 ```
