@@ -1,4 +1,4 @@
-## docker-image
+## Collectd Docker Image
 
 ```
 git clone https://github.com/rmakulov/docker-image.git
