@@ -52,6 +52,7 @@ LoadPlugin vmem
 # The following configuration collects information about the network traffic,
 # packets per second and errors from all network interfaces.
 <Plugin interface>
+    Interface "/^docker*/"
     IgnoreSelected true
 </Plugin>
 
