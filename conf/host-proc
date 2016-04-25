@@ -26,15 +26,6 @@ LoadPlugin vmem
   </Aggregation>
 </Plugin>
 
-# The following configuration collects data from all filesystems: 
-# the number of free, reserved and used inodes is reported in addition to
-# the usual metrics, the values are relative percentage. 
-<Plugin df>
-    IgnoreSelected true
-    ReportInodes true
-    ValuesPercentage true
-</Plugin>
-
 # The following configuration collects performance statistics from all 
 # hard-disks and, where supported, partitions.
 <Plugin disk>
