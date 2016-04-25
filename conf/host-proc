@@ -1,10 +1,8 @@
 LoadPlugin aggregation
 LoadPlugin contextswitch
 LoadPlugin cpu
-LoadPlugin df
 LoadPlugin disk
 LoadPlugin entropy
-LoadPlugin interface
 LoadPlugin load
 LoadPlugin logfile
 LoadPlugin memory
@@ -40,12 +38,6 @@ LoadPlugin vmem
 # The following configuration collects performance statistics from all 
 # hard-disks and, where supported, partitions.
 <Plugin disk>
-    IgnoreSelected true
-</Plugin>
-
-# The following configuration collects information about the network traffic,
-# packets per second and errors from all network interfaces.
-<Plugin interface>
     IgnoreSelected true
 </Plugin>
 
