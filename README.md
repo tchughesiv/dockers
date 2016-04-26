@@ -1,7 +1,7 @@
 ## Collectd Docker Image
 
 
-If you want to collect statistic about docker host except df and interface plugins (they will be collected for container)
+If you want to collect statistic about proc from docker host
 ```
 docker run -d --pid=host --name=collectd-host-proc axibase/collectd --atsd-url=tcp://atsd_host:tcp_port --conf=host-proc
 ```
