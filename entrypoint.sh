@@ -2,6 +2,8 @@
 
 set -e
 
+sed -i s,discard_prefix,`hostname`,g /host;
+
 while getopts ab:c-: arg; do
   case $arg in
     - )  LONG_OPTARG="${OPTARG#*=}"
