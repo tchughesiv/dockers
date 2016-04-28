@@ -52,12 +52,8 @@ LoadPlugin vmem
 # Entity "entity" and Prefix "collectd".
 <Plugin write_atsd>
      <Node "atsd">
-         atsdurl "atsd_url"
+         AtsdUrl "atsd_url"
          Prefix "collectd."
-         <Cache "cpu">
-              Interval 95
-              Threshold 5
-         </Cache>
          <Cache "disk">
               Interval 300
               Threshold 1
