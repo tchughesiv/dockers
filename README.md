@@ -38,14 +38,12 @@ To collect statistics from Dockerhost, provide the following keys to ```docker r
 * ```--net=host``` - get access to host network namespace
 * ```--privileged``` - get access to host devices
 * ```-v /:/`hostname`:ro \``` - get access to host mountpoints and filesystem usage
-* ```-v /etc/localtime:/etc/localtime:ro``` - to synchronize container time with host
 
 Example of command to collect data from Docker-host:
 
 ```bash
 docker run \
     -d \
-    -v /etc/localtime:/etc/localtime:ro \
     -v /:/`hostname`:ro \
     --name="nmon-atsd-collector" \
     --pid=host \
