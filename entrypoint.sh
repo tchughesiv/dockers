@@ -8,7 +8,7 @@ if [ -z $atsdPort ]; then
 fi
 
 topRequired=""
-if [ "$TOP" = "true" ]; then
+if [ "$T" = "true" ]; then
     topRequired="-T"
 fi
 
