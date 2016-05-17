@@ -7,10 +7,10 @@ if [ -z $atsdPort ]; then
     exit 1
 fi
 
-if [ -d /rootfs-proc ]; then
-    umount /proc
-    mount -o bind /rootfs-proc /proc
-fi
+#if [ -d /rootfs-proc ]; then
+#    umount /proc
+#    mount -o bind /rootfs-proc /proc
+#fi
 
 topRequired=""
 if [ "$T" = "true" ]; then
