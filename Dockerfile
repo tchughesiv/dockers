@@ -4,7 +4,7 @@ ENV s=60
 ENV c=60
 
 RUN apt-get update 
-RUN apt-get install -y gcc ncurses-dev curl
+RUN apt-get install -y gcc ncurses-dev curl lshw
 WORKDIR /opt/nmon
 
 
