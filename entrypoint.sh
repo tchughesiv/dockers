@@ -7,9 +7,14 @@ if [ -z $atsdPort ]; then
     exit 1
 fi
 
+topRequired=""
+if [ "$TOP" = "true" ]; then
+    topRequired="-T"
+fi
+
 while true; do
     fn="/opt/nmon/$(date +%y%m%d_%H%M).nmon"
-    pd="$(/opt/nmon/nmon -F $fn -s $s -c $c -T -p)"
+    pd="$(/opt/nmon/nmon -F $fn -s $s -c $c $topRequired -p)"
     { echo "nmon p:default e:`hostname` z:`date +%Z` f:`hostname`_file.nmon"; tail -f $fn --pid=$pd; } | nc $atsdUrl $atsdPort
     if kill -0 $pd 2>/dev/null; then
         kill -9 $pd
