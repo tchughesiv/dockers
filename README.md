@@ -37,14 +37,14 @@ To collect statistics from Dockerhost, provide the following keys to ```docker r
 * ```--pid=host``` - get access to host proccesses namespace
 * ```--net=host``` - get access to host network namespace
 * ```--privileged``` - get access to host devices
-* ```-v /:/`hostname`:ro \``` - get access to host mountpoints and filesystem usage
+* ```-v /:/rootfs:ro``` - get access to host mountpoints and filesystem usage
 
 Example of command to collect data from Docker-host:
 
 ```bash
 docker run \
     -d \
-    -v /:/`hostname`:ro \
+    -v /:/rootfs:ro \
     --name="nmon-atsd-collector" \
     --pid=host \
     --privileged \
