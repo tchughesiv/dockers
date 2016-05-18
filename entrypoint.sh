@@ -13,9 +13,9 @@ if [ "$T" = "true" ]; then
 fi
 
 while true; do
-    fn="/opt/nmon/$(date +%y%m%d_%H%M).nmon"
+    fn="/opt/nmon/$(date +%y%m%d_%H%M%S).nmon"
     pd="$(/opt/nmon/nmon -F $fn -s $s -c $c $topRequired -p)"
-    { echo "nmon p:default e:`hostname` z:`date +%Z` f:`hostname`_file.nmon"; tail -f $fn --pid=$pd; } | nc $atsdUrl $atsdPort
+    { echo "nmon p:default e:`hostname` z:`date +%Z` f:`hostname`_file.nmon"; tail -f $fn -n +0 --pid=$pd; } | nc $atsdUrl $atsdPort
     if kill -0 $pd 2>/dev/null; then
         kill -9 $pd
     fi
