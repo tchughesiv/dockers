@@ -9,7 +9,7 @@ fi
 
 releaseFileList="lsb-release os-release"
 for release in $releaseFileList; do
-    if [ -f "rootfs/etc/$release" ]; then
+    if [ -f "/rootfs/etc/$release" ]; then
         mount -o bind "/rootfs/etc/$release" /etc/lsb-release
     else
         continue
