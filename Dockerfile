@@ -1,4 +1,4 @@
-FROM centos:centos7
+FROM rhel7:latest
 MAINTAINER ATSD Developers <dev-atsd@axibase.com>
 
 #metadata
