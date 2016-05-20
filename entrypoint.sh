@@ -7,10 +7,20 @@ if [ -z $atsdPort ]; then
     exit 1
 fi
 
+releaseFileList="lsb-release os-release"
+for release in $releaseFileList; do
+    if [ -f "rootfs/etc/$release" ];
+        mount -o bind "/rootfs/etc/$release" /etc/lsb-release
+    else
+        continue
+    fi
+done
+
 topRequired=""
 if [ "$T" = "true" ]; then
     topRequired="-T"
 fi
+
 
 while true; do
     fn="/opt/nmon/$(date +%y%m%d_%H%M%S).nmon"
