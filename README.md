@@ -5,7 +5,7 @@
 The following command will start to collect data to ATSD (the ATSD server should be started and listening on specified url and port).
 
 ```
-docker run -d --name="nmon-atsd-collector" axibase/nmon atsd_server atsd_tcp_port
+docker run -d --name="nmon-atsd-collector" axibase/nmon tcp://atsd_server:atsd_tcp_port
 ```
 
 By default, nmon snapshots will be created every 60 seconds during one hour ( totally 60 snapshots ).
@@ -20,24 +20,25 @@ c - snapshots count
 Example:
 
 ```
-docker run -d -e s=120 -e c=30 --name="nmon-atsd-collector" axibase/nmon atsd_server atsd_tcp_port
+docker run -d -e s=120 -e c=30 --name="nmon-atsd-collector" axibase/nmon tcp://atsd_server:atsd_tcp_port
 ```
 
 To automatically start container after docker-engine restart add `--restart=always` flag:
 
 
 ```
-docker run -d --restart=always --name="nmon-atsd-collector" axibase/nmon atsd_server atsd_tcp_port
+docker run -d --restart=always --name="nmon-atsd-collector" axibase/nmon tcp://atsd_server:atsd_tcp_port
 ```
 
 ## Collect Data from Docker-host:
 
 To collect statistics from Dockerhost, provide the following keys to ```docker run``` command:
 
-* ```--pid=host``` - get access to host proccesses namespace
+* ```-v /:/rootfs:ro``` - get access to host mountpoints and filesystem usage
 * ```--net=host``` - get access to host network namespace
 * ```--privileged``` - get access to host devices
-* ```-v /:/rootfs:ro``` - get access to host mountpoints and filesystem usage
+* ```--pid=host``` - get access to host proccesses namespace
+* ```-e T=true``` - while specified with `--pid=host`, order nmon to collect `top` output with program arguments
 
 Example of command to collect data from Docker-host:
 
@@ -53,5 +54,5 @@ docker run \
     --restart=always \
     -e s=60 \
     -e c=1440 \
-    axibase/nmon atsd_server atsd_tcp_port
+    axibase/nmon tcp://atsd_server:atsd_tcp_port
 ```
