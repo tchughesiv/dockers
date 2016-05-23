@@ -47,8 +47,11 @@ docker run \
     -v /:/rootfs:ro \
     --name="nmon-atsd-collector" \
     --pid=host \
+    -e T=true
     --privileged \
     --net=host \
     --restart=always \
+    -e s=60 \
+    -e c=1440 \
     axibase/nmon atsd_server atsd_tcp_port
 ```

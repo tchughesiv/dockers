@@ -2,20 +2,17 @@
 atsdUrl=$1
 atsdPort=$2
 
+#check required arguments exist
 if [ -z $atsdPort ]; then
     echo usage: /opt/nmon/entrypoint.sh atsd_url atsd_port
     exit 1
 fi
 
-releaseFileList="lsb-release os-release"
-for release in $releaseFileList; do
-    if [ -f "/rootfs/etc/$release" ]; then
-        mount -o bind "/rootfs/etc/$release" /etc/lsb-release
-    else
-        continue
-    fi
-done
+#mount distribution info files
+cd /rootfs
+find etc/ -maxdepth 1 -name "*-release" -exec mount -o bind /rootfs/{} /{} \;
 
+#check extra agruments
 topRequired=""
 if [ "$T" = "true" ]; then
     topRequired="-T"
