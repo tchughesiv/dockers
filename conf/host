@@ -32,6 +32,7 @@ LoadPlugin vmem
 # the number of free, reserved and used inodes is reported in addition to
 # the usual metrics, the values are relative percentage. 
 <Plugin df>
+        MountPoint "/^/etc//"
         MountPoint "/.*docker.*/" 
         FSType tmpfs            
         IgnoreSelected True
