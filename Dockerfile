@@ -53,7 +53,7 @@ RUN apt-get update && apt-get install -y \
       rm -rf /var/tmp/*
 
 WORKDIR /usr/src
-RUN git clone https://github.com/rmakulov/atsd-collectd-plugin.git collectd
+RUN git clone https://github.com/axibase/atsd-collectd-plugin.git collectd
 WORKDIR /usr/src/collectd
 RUN ./build.sh
 RUN ./configure \
