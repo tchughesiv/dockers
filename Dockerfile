@@ -65,9 +65,7 @@ RUN ./configure \
 RUN make all
 RUN make install
 RUN make clean
-COPY conf/host-proc /etc/collectd/collectd.conf
-ADD conf/host /
-ADD conf/host-proc /
+COPY collectd.conf /etc/collectd/collectd.conf
 ADD entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 

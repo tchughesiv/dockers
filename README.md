@@ -1,15 +1,14 @@
 ## Collectd Docker Image
 
 
-If you want to collect statistic about proc from docker host
-```
-docker run -d --pid=host --name=collectd-host-proc axibase/collectd --atsd-url=tcp://atsd_host:tcp_port --conf=host-proc
-```
-
-If you want to collect all statistics from docker host
+To collect all statistics from docker host run
 
 ```
-docker run -d -v /:/`hostname`:ro --pid=host --net=host --name=collectd-host axibase/collectd --atsd-url=tcp://atsd_host:tcp_port --conf=host
+docker run -d -v /:/rootfs:ro --pid=host --net=host \
+    --name=collectd axibase/collectd \
+    --atsd-url=tcp://atsd_host:tcp_port
 ```
 
 Details about collectd write_atsd plugin you can find at [write atsd page](https://github.com/axibase/atsd-collectd-plugin)
+
+Credits to Carles Amigó for https://github.com/fr3nd/docker-collectd
