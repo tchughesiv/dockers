@@ -3,16 +3,15 @@ MAINTAINER ATSD Developers <dev-atsd@axibase.com>
 ENV s=60
 ENV c=1440
 
-RUN apt-get update 
-RUN apt-get install -y gcc ncurses-dev curl lshw
+RUN apt-get update && \
+    apt-get install -y curl lshw || yum install -y curl lshw
 WORKDIR /opt/nmon
 
 
-RUN curl -o nmon.c https://raw.githubusercontent.com/axibase/nmon/master/lmon16d.c
+RUN curl -L -o nmon https://github.com/axibase/nmon/releases/download/16d/nmon_x86_ubuntu && \
+    chmod +x nmon
 RUN curl -o entrypoint.sh https://raw.githubusercontent.com/axibase/dockers/nmon/entrypoint.sh && \
     chmod +x entrypoint.sh
-
-RUN cc -o nmon nmon.c -g -O3 -Wall -D JFS -D GETUSER -D LARGEMEM -lncurses -lm -g -D KERNEL_2_6_18 -D X86
 
 ENTRYPOINT ["/opt/nmon/entrypoint.sh"]
 
