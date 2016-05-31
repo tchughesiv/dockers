@@ -48,7 +48,7 @@ docker run \
     -v /:/rootfs:ro \
     --name="nmon-atsd-collector" \
     --pid=host \
-    -e T=true
+    -e T=true \
     --privileged \
     --net=host \
     --restart=always \
