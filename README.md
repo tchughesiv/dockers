@@ -1,48 +1,51 @@
-# Nmon Docker Image
+# NMON Docker Image
 
-## Start
+## Overview
 
-The following command will start to collect data to ATSD (the ATSD server should be started and listening on specified url and port).
+This Docker image can be used to collect snapshot statistics and system command output from at the host level in NMON format. It escapes container namespace and device isolation with `--priviliged` `--net=host`, optional `--pid=host`. 
 
+root fs is exposed and re-mounted inside the container to provide the same system command output as on the host.
+
+The image provides three alternatives for storing data produced by the nmon daemon:
+
+* Container file and stdout, accessible also with `docker logs` command
+* Host file
+* Axibase Time Series Database (ATSD)
+
+The advantage of collecting host-level statistics with a container as opposed to running nmon directly on the host is that this mode standartizes deployment (everything is running in containers, from images).
+
+## Container Launch Options
+
+| **Name** | **Description** |
+|:---|:---|
+|`-v /:/rootfs:ro` | Expose host's root file system / to the container on mount point `/rootfs` in read-only mode.|
+|`--pid=host` | Make host's processes visible to the container, required for top process statistics collection with `T`.|
+|`--net=host` | Make host's network visible to the container.|
+|`--privileged` | Allow access to host's devices. | 
+|`--restart=always` | Automatically restart the container on docker/machine restart.|
+
+## Configuration Parameters
+
+| **Name** | **Type** | **Description** |
+|:---|:---|:---|
+|c | integer | Number of snapshots to take between restarts. Default: 1440 (1 day @ 60 second).<br>Each restart triggers execution of system commands to collect up-to-date configuration.|
+|s| integer | Snapshot interval, in seconds. Controls how frequently statistics are collected. Default: 60|
+|T | boolean | Collection top process usage statistics. Default: false.<br>If enabled, `--pid=host` must be set as well as so that container has access to the list of processes on the host, instead of on the container.|
+
+The parameters are passed to the container with environmental variables `-e`, for example:
+
+```bash
+docker run \
+    ...
+    -e s=60 \
+    -e c=1440 \
+    -e T=true \
+    axibase/nmon
 ```
-docker run -d --name="nmon-atsd-collector" axibase/nmon tcp://atsd_server:atsd_tcp_port
-```
 
-By default, nmon snapshots will be created every 60 seconds during one hour ( totally 60 snapshots ).
+## Launch Examples
 
-To specify the snapshots period and count, you can provide the following environment variables to container:
-
-```
-s - snapshots period (in seconds)
-c - snapshots count
-```
-
-Example:
-
-```
-docker run -d -e s=120 -e c=30 --name="nmon-atsd-collector" axibase/nmon tcp://atsd_server:atsd_tcp_port
-```
-
-To automatically start container after docker-engine restart add `--restart=always` flag:
-
-
-```
-docker run -d --restart=always --name="nmon-atsd-collector" axibase/nmon tcp://atsd_server:atsd_tcp_port
-```
-
-## Collect Data from Docker-host:
-
-To collect statistics from Dockerhost, provide the following keys to ```docker run``` command:
-
-* ```-v /:/rootfs:ro``` - get access to host mountpoints and filesystem usage
-* ```--net=host``` - get access to host network namespace
-* ```--privileged``` - get access to host devices
-* ```--pid=host``` - get access to host proccesses namespace
-* ```-e T=true``` - while specified with `--pid=host`, order nmon to collect `top` output with program arguments
-
-## Example 
-
-#### Collect data from Docker-host to an ATSD
+### Send data including top processes to ATSD.
 
 ```bash
 docker run \
@@ -52,38 +55,33 @@ docker run \
     --pid=host \
     -e T=true \
     --privileged \
-    --net=host \
-    --restart=always \
-    -e s=60 \
-    -e c=1440 \
+    --net=host
     axibase/nmon tcp://atsd_server:atsd_tcp_port
 ```
 
-#### Collect data from Docker-host to a file in container
+### Store data on a file in container
 
 
 ```bash
 docker run \
     -d \
     -v /:/rootfs:ro \
-    --name="nmon-cnt-collector" \
     --pid=host \
     -e T=true \
     --privileged \
     --net=host \
-    --restart=always \
     axibase/nmon
 ```
 
-All statistics also will be streamed to stdout, so you can read in from Docker-host by the following command:
+nmon output will be stored to a daily file as well as to standard out, so you can read it as usual:
 
 ```
 docker logs -f nmon-cnt-collector
 ```
 
-#### Collect data from Docker-host to a file in Docker-host
+### Store data on a file in Host
 
-Mount any directory from Docker-host as *nmon output folder* ( ```/opt/nmon/output``` ) in container:
+Mount any directory from Docker host as nmon output folder in container:
 
 ```bash
 docker run \
@@ -95,8 +93,7 @@ docker run \
     -e T=true \
     --privileged \
     --net=host \
-    --restart=always \
     axibase/nmon
 ```
 
-In example, all nmon output files will be stored in ```/tmp/nmon_output``` folder on Docker-host.
+All nmon output files will be stored in ```/tmp/nmon_output``` directory on Docker host.
