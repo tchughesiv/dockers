@@ -59,7 +59,8 @@ docker run \
     axibase/nmon tcp://atsd_server:atsd_tcp_port
 ```
 
-* To collect data from Docker-host to a file in container. All data will be available by `docker logs -f nmon-cnt-collector`:
+* To collect data from Docker-host to a file in container.
+
 
 ```bash
 docker run \
@@ -74,7 +75,13 @@ docker run \
     axibase/nmon
 ```
 
-* To collect data from Docker-host to a file in Docker-host. Mount any directory from host to nmon output folder ( ```/opt/nmon/output``` ) in container:
+All statistics also will be streamed to stdout, so you can read in from Docker-host by the following command:
+
+```
+docker logs -f nmon-cnt-collector
+```
+
+* To collect data from Docker-host to a file in Docker-host, mount any directory from Docker-host as `nmon output folder` ( ```/opt/nmon/output``` ) in container:
 
 ```bash
 docker run \
@@ -90,4 +97,4 @@ docker run \
     axibase/nmon
 ```
 
-All nmon output files will be stored in ```/tmp/nmon_output``` folder.
+In example, all nmon output files will be stored in ```/tmp/nmon_output``` folder.
