@@ -1,7 +1,7 @@
 FROM ubuntu:14.04
 MAINTAINER ATSD Developers <dev-atsd@axibase.com>
 ENV s=60
-ENV c=60
+ENV c=1440
 
 RUN apt-get update 
 RUN apt-get install -y gcc ncurses-dev curl lshw
