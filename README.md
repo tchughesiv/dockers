@@ -85,8 +85,7 @@ docker run \
 
 All nmon output files will be stored in ```/tmp/nmon_output``` directory on Docker host.
 
-
-### Send data including top processes to ATSD.
+### Store data in ATSD
 
 ```bash
 docker run \
@@ -97,5 +96,5 @@ docker run \
     -e T=true \
     --privileged \
     --net=host
-    axibase/nmon tcp://atsd_server:atsd_tcp_port
+    axibase/nmon tcp://atsd_hostname:8081
 ```
