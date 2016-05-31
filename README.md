@@ -45,19 +45,6 @@ docker run \
 
 ## Launch Examples
 
-### Send data including top processes to ATSD.
-
-```bash
-docker run \
-    -d \
-    -v /:/rootfs:ro \
-    --name="nmon-atsd-collector" \
-    --pid=host \
-    -e T=true \
-    --privileged \
-    --net=host
-    axibase/nmon tcp://atsd_server:atsd_tcp_port
-```
 
 ### Store data on a file in container
 
@@ -97,3 +84,18 @@ docker run \
 ```
 
 All nmon output files will be stored in ```/tmp/nmon_output``` directory on Docker host.
+
+
+### Send data including top processes to ATSD.
+
+```bash
+docker run \
+    -d \
+    -v /:/rootfs:ro \
+    --name="nmon-atsd-collector" \
+    --pid=host \
+    -e T=true \
+    --privileged \
+    --net=host
+    axibase/nmon tcp://atsd_server:atsd_tcp_port
+```
