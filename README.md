@@ -40,7 +40,9 @@ To collect statistics from Dockerhost, provide the following keys to ```docker r
 * ```--pid=host``` - get access to host proccesses namespace
 * ```-e T=true``` - while specified with `--pid=host`, order nmon to collect `top` output with program arguments
 
-Example of command to collect data from Docker-host:
+## Example 
+
+* To collect data from Docker-host to an ATSD:
 
 ```bash
 docker run \
@@ -56,3 +58,36 @@ docker run \
     -e c=1440 \
     axibase/nmon tcp://atsd_server:atsd_tcp_port
 ```
+
+* To collect data from Docker-host to a file in container. All data will be available by `docker logs -f nmon-cnt-collector`:
+
+```bash
+docker run \
+    -d \
+    -v /:/rootfs:ro \
+    --name="nmon-cnt-collector" \
+    --pid=host \
+    -e T=true \
+    --privileged \
+    --net=host \
+    --restart=always \
+    axibase/nmon
+```
+
+* To collect data from Docker-host to a file in Docker-host. Mount any directory from host to nmon output folder ( ```/opt/nmon/output``` ) in container:
+
+```bash
+docker run \
+    -d \
+    -v /:/rootfs:ro \
+    -v /tmp/nmon_output:/opt/nmon/output \
+    --name="nmon-host-collector" \
+    --pid=host \
+    -e T=true \
+    --privileged \
+    --net=host \
+    --restart=always \
+    axibase/nmon
+```
+
+All nmon output files will be stored in ```/tmp/nmon_output``` folder.
