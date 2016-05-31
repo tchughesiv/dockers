@@ -22,9 +22,11 @@ if [ "$T" = "true" ]; then
     topRequired="-T"
 fi
 
+NMON_OUTPUT="/opt/nmon/output"
+mkdir -p ${NMON_OUTPUT} >/dev/null 2>&1
 
 while true; do
-    fn="/opt/nmon/$(date +%y%m%d_%H%M%S).nmon"
+    fn="${NMON_OUTPUT}/$(date +%y%m%d_%H%M%S).nmon"
     pd="$(/opt/nmon/nmon -F $fn -s $s -c $c $topRequired -p)"
     if $stdout; then
         tail -f $fn -n +0 --pid=$pd
