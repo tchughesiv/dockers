@@ -4,7 +4,7 @@ ENV s=60
 ENV c=1440
 
 RUN apt-get update && \
-    apt-get install -y curl lshw || yum install -y curl lshw
+    apt-get install -y curl lshw || yum install -y curl lshw net-tools
 WORKDIR /opt/nmon
 
 
@@ -14,7 +14,4 @@ RUN curl -o entrypoint.sh https://raw.githubusercontent.com/axibase/dockers/nmon
     chmod +x entrypoint.sh
 
 ENTRYPOINT ["/opt/nmon/entrypoint.sh"]
-
-
-
 
