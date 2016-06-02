@@ -5,6 +5,6 @@ echo $password | tee /opt/$ftpuser-password
 
 echo "$ftpuser:$password" | chpasswd
 
-service ssh start 2>/dev/null
+service ssh start >/dev/null 2>&1
 vsftpd
 
