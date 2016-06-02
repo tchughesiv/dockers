@@ -33,7 +33,7 @@ UsePAM yes
 Subsystem sftp internal-sftp
 
 Match group ftpaccess
-ChrootDirectory /home/%u/ftpdata
+ChrootDirectory %h
 X11Forwarding no
 AllowTcpForwarding no
 ForceCommand internal-sftp
