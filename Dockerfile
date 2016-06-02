@@ -7,10 +7,11 @@ RUN apt-get update && apt-get upgrade && \
     useradd -m ${ftpuser} -s /usr/sbin/nologin && \
     echo "/usr/sbin/nologin" >> /etc/shells
 
-WORKDIR /opt
-RUN curl -L -o entrypoint.sh https://raw.githubusercontent.com/axibase/dockers/sftp/entrypoint.sh && \
-    chmod +x entrypoint.sh && \
+RUN curl -L -o /opt/entrypoint.sh https://raw.githubusercontent.com/axibase/dockers/sftp/entrypoint.sh && \
+    chmod +x /opt/entrypoint.sh && \
     curl -L -o /etc/vsftpd.conf https://raw.githubusercontent.com/axibase/dockers/sftp/vsftpd.conf
+
+WORKDIR /home/${ftpuser}
 
 #ssh, ftp
 EXPOSE 21 22
