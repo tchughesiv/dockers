@@ -5,9 +5,9 @@ ENV ftpuser="axibase-ftp"
 RUN apt-get update && apt-get upgrade && \
     apt-get install -y vsftpd openssh-server curl && \
     groupadd ftpaccess && \
-    mkdir /home/${ftpuser} && \
-    chown root:ftpaccess /home/${ftpuser} && \
+    mkdir -p /home/${ftpuser}/ftp && \
     useradd -m ${ftpuser} -g ftpaccess -s /usr/sbin/nologin && \
+    chown ${ftpuser}:ftpaccess /home/${ftpuser}/ftp && \
     echo "/usr/sbin/nologin" >> /etc/shells
 
 RUN curl -L -o /opt/entrypoint.sh https://raw.githubusercontent.com/axibase/dockers/sftp/entrypoint.sh && \
