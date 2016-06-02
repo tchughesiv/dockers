@@ -9,7 +9,8 @@ RUN apt-get update && apt-get upgrade && \
 
 WORKDIR /opt
 RUN curl -L -o entrypoint.sh https://raw.githubusercontent.com/axibase/dockers/sftp/entrypoint.sh && \
-    chmod +x entrypoint.sh
+    chmod +x entrypoint.sh && \
+    curl -L -o /etc/vsftpd.conf https://raw.githubusercontent.com/axibase/dockers/sftp/vsftpd.conf
 
 #ssh, ftp
 EXPOSE 21 22
