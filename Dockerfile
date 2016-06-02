@@ -1,17 +1,16 @@
 FROM ubuntu:14.04
 MAINTAINER ATSD Developers <dev-atsd@axibase.com>
-ENV s=60
-ENV c=1440
+ENV fptuser="axibase-ftp"
 
-RUN apt-get update && \
-    apt-get install -y curl lshw || yum install -y curl lshw net-tools
-WORKDIR /opt/nmon
+RUN apt-get update && apt-get upgrade \
+    apt-get install vsftpd openssh-server curl && \
+    useradd -m ${fptuser} -s /usr/sbin/nologin && \
+    echo "/usr/sbin/nologin" >> /etc/shells
 
+WORKDIR /opt
+RUN curl -L -o entrypoint.sh https://raw.githubusercontent.com/axibase/dockers/sftp/entrypoint.sh
 
-RUN curl -L -o nmon https://github.com/axibase/nmon/releases/download/16d/nmon_x86_ubuntu && \
-    chmod +x nmon
-RUN curl -o entrypoint.sh https://raw.githubusercontent.com/axibase/dockers/nmon/entrypoint.sh && \
-    chmod +x entrypoint.sh
-
-ENTRYPOINT ["/opt/nmon/entrypoint.sh"]
-
+#ssh, ftp
+EXPOSE 21,22
+ENTRYPOINT ["/opt/entrypoint.sh"]
+ 
