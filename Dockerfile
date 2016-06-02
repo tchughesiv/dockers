@@ -18,8 +18,8 @@ RUN curl -L -o /opt/entrypoint.sh https://raw.githubusercontent.com/axibase/dock
 
 WORKDIR /home/${ftpuser}
 
-#ftp ssh
-EXPOSE 21 22
+#sftp
+EXPOSE 22
 VOLUME ["/home/${ftpuser}"]
 ENTRYPOINT ["/opt/entrypoint.sh"]
  
