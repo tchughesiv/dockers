@@ -10,12 +10,16 @@ RUN apt-get update && apt-get upgrade && \
 
 RUN curl -L -o /opt/entrypoint.sh https://raw.githubusercontent.com/axibase/dockers/sftp/entrypoint.sh && \
     chmod +x /opt/entrypoint.sh && \
-    curl -L -o /etc/ssh/sshd_config https://raw.githubusercontent.com/axibase/dockers/sftp/sshd_config 
-    curl -L -o /etc/vsftpd.conf https://raw.githubusercontent.com/axibase/dockers/sftp/vsftpd.conf
+    curl -L -o /etc/ssh/sshd_config https://raw.githubusercontent.com/axibase/dockers/sftp/sshd_config && \
+    curl -L -o /etc/vsftpd.conf https://raw.githubusercontent.com/axibase/dockers/sftp/vsftpd.conf && \
+    chown root /home/${ftpuser} && \
+    mkdir -p /home/${ftpuser}/ftpdata && \
+    chown ${ftpuser}:ftpaccess /home/${ftpuser}/ftpdata
 
-WORKDIR /home/${ftpuser}
+WORKDIR /home/${ftpuser}/ftpdata
 
 #ssh, ftp
 EXPOSE 21 22
+VOLUME ["/home/${ftpuser}/ftpdata"]
 ENTRYPOINT ["/opt/entrypoint.sh"]
  
