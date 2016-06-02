@@ -1,4 +1,4 @@
-# SFTP Storage
+# FTP Storage
 
 Allow to upload file to container by SFTP, RSYNC, SCP.
 
