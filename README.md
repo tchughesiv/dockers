@@ -1,15 +1,17 @@
-# FTP Storage
+# Docker SFTP Container
 
-Allow to upload file to container by SFTP
+This is a Docker container that starts a Secure FTP server and generates a random password for the built-in user.
 
-Passowrd for readonly user `axibase-ftp` will be generated after container running.
+The name of the built-in user is `axibase-ftp` and can be modified in Dockerfile.
 
-## Starting
+The password is randomly generated when the container is launched.
+
+## Start Container
 
 ```
 docker run \
     -dP \
-    --name="ftp-server" \
+    --name="sftp-server" \
     axibase/sftp
 ```
 
@@ -19,21 +21,21 @@ or
 docker run \
     -dP \
     -v /srv:/home/axibase-ftp \
-    --name="ftp-server" \
+    --name="sftp-server" \
     axibase/sftp
 ```
 
-## Get password
+## Obtain Password
 
 ```
-docker logs ftp-server
+docker logs sftp-server
 ```
 
-## Transfer files
+## Transfer Files
 
 ```
-sftp axibase-ftp@172.17.0.2:/ftp/new_statistics.csv /home/storage/new_statistics.csv
-sftp /home/storage/update.xml axibase-ftp@172.17.0.2:/ftp/
+sftp axibase-ftp@172.17.0.2:/ftp/file-1 /home/storage/file-1
+sftp /home/storage/file-2 axibase-ftp@172.17.0.2:/ftp/
 ```
 
 
