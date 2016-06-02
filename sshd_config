@@ -29,7 +29,7 @@ PrintLastLog yes
 TCPKeepAlive yes
 AcceptEnv LANG LC_*
 
-UsePAM yes
+#UsePAM yes
 Subsystem sftp internal-sftp
 
 Match group ftpaccess
