@@ -12,13 +12,12 @@ RUN curl -L -o /opt/entrypoint.sh https://raw.githubusercontent.com/axibase/dock
     chmod +x /opt/entrypoint.sh && \
     curl -L -o /etc/ssh/sshd_config https://raw.githubusercontent.com/axibase/dockers/sftp/sshd_config && \
     curl -L -o /etc/vsftpd.conf https://raw.githubusercontent.com/axibase/dockers/sftp/vsftpd.conf && \
-    mkdir -p /srv/ftp && \
-    chown ${ftpuser}:ftpaccess /srv/ftp
+    chown root /home/${ftpuser}
 
 WORKDIR /srv/ftp
 
 #ftp ssh
 EXPOSE 21 22
-VOLUME ["/srv/ftp"]
+VOLUME ["/home/${ftpuser}"]
 ENTRYPOINT ["/opt/entrypoint.sh"]
  
