@@ -2,7 +2,7 @@
 
 Allow to upload file to container by SFTP
 
-Passowrd for readonly user will be generated after container running.
+Passowrd for readonly user `axibase-ftp` will be generated after container running.
 
 ## Starting
 
