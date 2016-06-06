@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 MAINTAINER ATSD Developers <dev-atsd@axibase.com>
-ENV ftpuser="axibase-ftp"
+ENV ftpuser="ftp-user"
 
 RUN apt-get update && apt-get upgrade && \
     apt-get install -y vsftpd openssh-server curl && \
