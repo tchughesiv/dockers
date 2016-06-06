@@ -2,7 +2,7 @@
 
 This is a Docker container that starts a Secure FTP server and generates a random password for the built-in user.
 
-The name of the built-in user is `ftp-user`. It can be modified in Dockerfile or with an environmental variable.
+The name of the built-in user is **ftp-user**. It can be modified in Dockerfile or with an environmental variable.
 
 The password is randomly generated when the container is launched.
 
