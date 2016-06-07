@@ -6,6 +6,7 @@ RUN apt-get update && apt-get upgrade && \
     apt-get install -y vsftpd openssh-server curl && \
     groupadd ftpaccess && \
     mkdir -p /home/${ftpuser}/ftp && \
+    mkdir -p /var/run/sshd && \
     useradd -m ${ftpuser} -g ftpaccess -s /usr/sbin/nologin && \
     chown ${ftpuser}:ftpaccess /home/${ftpuser}/ftp && \
     echo "/usr/sbin/nologin" >> /etc/shells
