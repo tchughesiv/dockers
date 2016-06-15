@@ -24,5 +24,5 @@ WORKDIR /home/${ftpuser}
 #sftp
 EXPOSE 22
 VOLUME ["/home/${ftpuser}"]
-ENTRYPOINT ["/bin/sh", "/opt/entrypoint.sh"]
+ENTRYPOINT ["/opt/entrypoint.sh"]
  
