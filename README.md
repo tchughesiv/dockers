@@ -8,7 +8,7 @@
 wget https://raw.githubusercontent.com/axibase/dockers/atsd-rhel7/Dockerfile
 ```
 
-* Make sure your Red Hat is activated and you are able to pull and activated docker image of rhel7
+* Make sure your Red Hat is activated and you are able to pull an activated docker image of rhel7
 
 * Build your image
 
