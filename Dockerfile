@@ -2,8 +2,6 @@ FROM ubuntu:14.04
 MAINTAINER ATSD Developers <dev-atsd@axibase.com>
 ENV ftpuser="ftp-user"
 
-#ADD https://raw.githubusercontent.com/axibase/dockers/sftp/entrypoint.sh /opt/entrypoint.sh
-#ADD https://raw.githubusercontent.com/axibase/dockers/sftp/sshd_config /etc/ssh/sshd_config
 ADD entrypoint.sh /opt/entrypoint.sh
 ADD sshd_config /etc/ssh/sshd_config
 
