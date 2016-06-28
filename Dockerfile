@@ -2,7 +2,7 @@ FROM debian:jessie
 MAINTAINER Axibase, dev@axibase.com
 
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get clean && apt-get update && apt-get install -y \
       autoconf \
       automake \
       autotools-dev \
@@ -65,7 +65,8 @@ RUN ./configure \
 RUN make all
 RUN make install
 RUN make clean
-COPY collectd.conf /etc/collectd/collectd.conf
+COPY collectd-graphite.conf /etc/collectd/collectd.conf
+ADD collectd.conf /
 ADD entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
