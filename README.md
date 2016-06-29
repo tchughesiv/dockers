@@ -4,7 +4,7 @@ This image collects statistics from Docker host (engine) and not from a containe
 
 ### Send Statistics to Axibase Time Series Database
 
-```
+```ls
 docker run -d -v /:/rootfs:ro --pid=host --net=host \
     --name=collectd axibase/collectd \
     --atsd-url=tcp://atsd_host:tcp_port
@@ -14,7 +14,7 @@ Details about collectd write_atsd plugin you can find at [write atsd page](https
 
 ### Send Statistics to Graphite
 
-```
+```ls
 docker run -d -v /:/rootfs:ro --pid=host --net=host \
     --name=collectd axibase/collectd \
     --protocol=tcp --host=graphite_host --port=tcp_port
