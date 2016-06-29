@@ -1,7 +1,8 @@
 ## Collectd Docker Image
 
+This image collects statistics from Docker host (engine) and not from a container where it's launched.
 
-To collect all statistics from docker host and send them to ATSD run
+### Send Statistics to Axibase Time Series Database
 
 ```
 docker run -d -v /:/rootfs:ro --pid=host --net=host \
@@ -11,7 +12,7 @@ docker run -d -v /:/rootfs:ro --pid=host --net=host \
 
 Details about collectd write_atsd plugin you can find at [write atsd page](https://github.com/axibase/atsd-collectd-plugin)
 
-To collect all statistics from docker host and send them to Graphite run
+### Send Statistics to Graphite
 
 ```
 docker run -d -v /:/rootfs:ro --pid=host --net=host \
@@ -19,4 +20,4 @@ docker run -d -v /:/rootfs:ro --pid=host --net=host \
     --protocol=tcp --host=graphite_host --port=tcp_port
 ```
 
-Credits to Carles Amigó for https://github.com/fr3nd/docker-collectd
+Credits to [Carles Amigó](https://github.com/fr3nd/docker-collectd) for the idea to re-mount rootfs.
