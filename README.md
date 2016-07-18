@@ -1,4 +1,4 @@
-## Dockerfile to build the image with Hadoop2.5.2 and Hbase1.1.4
+## Dockerfile to build the image with Hadoop2.6.4 and Hbase1.2.2
 
 ### To start:
 
@@ -8,9 +8,9 @@
 ```
 #### Pull image:
 ```
-docker pull axibase/hadoop-hbase:2.5.2-1.1.4
+docker pull axibase/hadoop-hbase:2.6.4-1.2.2
 ```
 #### Start container:
 ```
-docker run -d --net=host --name="hadoop2.5.2-hbase1.1.4" axibase/hadoop-hbase:2.5.2-1.1.4
+docker run -d --net=host --name="hadoop2.6.4-hbase1.2.2" axibase/hadoop-hbase:2.6.4-1.2.2
 ```
