@@ -17,16 +17,6 @@ docker run \
     axibase/sftp
 ```
 
-or
-
-```
-docker run \
-    -dP \
-    -v /srv:/home/ftp-user/ftp \
-    --name="sftp-server" \
-    axibase/sftp
-```
-
 ## Obtain Password
 
 ```
