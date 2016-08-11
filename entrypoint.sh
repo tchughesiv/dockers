@@ -89,6 +89,8 @@ logger "Files replaced."
 /opt/atsd/bin/atsd-all.sh start
 
 curl -i --data "userBean.username=$axiname&userBean.password=$axipass&repeatPassword=$axipass" http://127.0.0.1:8088/login
+curl -F "file=@/opt/atsd/rules.xml" -F "auto-enable=true" -F "replace=true" http://$axiname:$axipass@127.0.0.1:8088/rules/import
+
 while true; do
  sleep 5
 done

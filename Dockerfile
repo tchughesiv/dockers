@@ -29,6 +29,7 @@ RUN sed -i '52,55 s/^/#/' /opt/atsd/bin/atsd-all.sh && \
 
 #put script to docker
 ADD hbase-site.xml /opt/atsd/hbase/conf/
+ADD rules.xml /opt/atsd/
 
 #prepare database
 RUN /opt/atsd/install_user.sh && /opt/atsd/bin/atsd-all.sh stop
