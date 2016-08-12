@@ -2,7 +2,7 @@
 <rule>
 <name>test_rule_1</name>
 <metric>test_alert_metric_1</metric>
-<expression><![CDATA[true]]></expression>
+<expression><![CDATA[value >= 0]]></expression>
 <window>length(1)</window>
 <severity>WARNING</severity>
 <alertOpenMessage><![CDATA[Open alert for ${entity}, ${metric}, ${tags}. Value: ${value}]]></alertOpenMessage>
