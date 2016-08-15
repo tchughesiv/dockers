@@ -10,7 +10,7 @@ RUN locale-gen en_US.UTF-8 \
   && adduser --disabled-password --quiet --gecos "" axibase
 
 WORKDIR /home/axibase/
-ADD https://www.apache.org/dist/hbase/hbase-${version}/hbase-${version}-bin.tar.gz .
+ADD https://www.apache.org/dist/hbase/${version}/hbase-${version}-bin.tar.gz .
 
 RUN tar -xzf ./hbase-${version}-bin.tar.gz \
     && rm -f ./hbase-${version}-bin.tar.gz \
