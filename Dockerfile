@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 MAINTAINER ATSD Developers <dev-atsd@axibase.com>
-ENV version 1.0.3
+ENV version 1.2.2
 env JAVA_HOME /usr/lib/jvm/java-1.7.0-openjdk-amd64
 #metadata
 LABEL com.axibase.vendor="Axibase Corporation" \
