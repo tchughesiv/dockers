@@ -2,7 +2,6 @@
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <!--
 /**
- * Copyright 2010 The Apache Software Foundation
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -22,37 +21,16 @@
  */
 -->
 <configuration>
-<property>
-    <name>hbase.rootdir</name>
-<value>/opt/atsd/hbase-data</value> 
-</property>
-<property>
-    <name>hbase.hregion.majorcompaction</name>
-    <value>0</value>
-</property>
-<property>
-   <name>hbase.cluster.distributed</name>
-   <value>true</value>
-</property>
-<property>
-   <name>hbase.zookeeper.quorum</name>
-   <value>localhost</value>
-</property>
-<property>
-   <name>dfs.replication</name>
-   <value>1</value>
-</property>
-<property>
-   <name>hbase.zookeeper.property.dataDir</name>
-   <value>$DISTRHOME/hbase/zookeeper</value>
-</property>
-<property>
-    <name>hbase.coprocessor.region.classes</name>
-    <value>com.axibase.tsd.hbase.coprocessor.MessagesStatsEndpoint, com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint, com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint, org.apache.hadoop.hbase.coprocessor.example.BulkDeleteEndpoint</value>
-</property>
-<property>
-    <name>hbase.regionserver.ipc.address</name>
-    <value>localhost</value>
-</property>
+    <property>
+        <name>hbase.cluster.distributed</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>hbase.rootdir</name>
+        <value>/home/axibase/hbase_data</value> 
+    </property>
+    <property>
+        <name>hbase.zookeeper.property.dataDir</name>
+        <value>/home/axibase/zookeeper_data</value>
+    </property>
 </configuration>
-
