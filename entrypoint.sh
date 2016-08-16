@@ -86,6 +86,11 @@ rmdir ${DISTR_HOME}/bin/target
 logger "Files replaced."
 #/opt/atsd/install_user.sh
 
+#check timezone
+if [ -n "$timezone" ]; then
+    sed -i '/^DParams=.*/a DParams="\$DParams -Duser.timezone=$timezone"' /opt/atsd/atsd/bin/start-atsd.sh
+fi
+
 /opt/atsd/bin/atsd-all.sh start
 
 curl -i --data "userBean.username=$axiname&userBean.password=$axipass&repeatPassword=$axipass" http://127.0.0.1:8088/login
