@@ -19,10 +19,10 @@ RUN tar -xzf ./hbase-${version}-bin.tar.gz \
 
 ADD hbase-site.xml ./hbase-${version}/conf/
 ADD hbase-env.sh ./hbase-${version}/conf/
-ADD entrypoint.sh /
+ADD entrypoint-hbase.sh /
 
-RUN chown -R axibase:axibase /home/axibase /entrypoint.sh
+RUN chown -R axibase:axibase /home/axibase /entrypoint-hbase.sh
 USER axibase
 
-ENTRYPOINT ["/bin/bash","/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash","/entrypoint-hbase.sh"]
 
