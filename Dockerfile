@@ -4,8 +4,7 @@ MAINTAINER ATSD Developers <dev-atsd@axibase.com>
 #metadata
 LABEL com.axibase.vendor="Axibase Corporation" \
   com.axibase.product="Axibase Time Series Database" \
-  com.axibase.code="ATSD" \
-  com.axibase.revision="${version}"
+  com.axibase.code="ATSD"
 
 WORKDIR /home/axibase/
 ADD  entrypoint-atsd.sh /
