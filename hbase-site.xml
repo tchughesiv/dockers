@@ -33,4 +33,8 @@
         <name>hbase.zookeeper.property.dataDir</name>
         <value>/home/axibase/zookeeper_data</value>
     </property>
+    <property>
+        <name>hbase.coprocessor.region.classes</name>
+        <value>com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint, com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint, org.apache.hadoop.hbase.coprocessor.example.BulkDeleteEndpoint</value>
+    </property>
 </configuration>
