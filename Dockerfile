@@ -1,4 +1,4 @@
-FROM axibase/atsd:1.0.3_dev
+FROM axibase/atsd:1.2.2_dev
 MAINTAINER ATSD Developers <dev-atsd@axibase.com>
 
 ADD entrypoint-api-test.sh /
