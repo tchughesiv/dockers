@@ -1,4 +1,4 @@
-FROM axibase/hbase:1.0.3
+FROM axibase/hbase:1.2.2
 MAINTAINER ATSD Developers <dev-atsd@axibase.com>
 
 #metadata
