@@ -6,45 +6,24 @@ fi
 
 
 DISTR_HOME="/opt/atsd"
-ATSD_START="`readlink -f ${DISTR_HOME}/atsd/bin/start-atsd.sh`"
-allControl="${DISTR_HOME}/bin/atsd-all.sh"
-tsdControl="${DISTR_HOME}/bin/atsd-tsd.sh"
-hbaseControl="${DISTR_HOME}/bin/atsd-hbase.sh"
 UPDATELOG="`readlink -f ${DISTR_HOME}/atsd/logs/update.log`"
 STARTLOG="`readlink -f ${DISTR_HOME}/atsd/logs/start.log`"
 JAVA_DISTR_HOME="/usr/lib/jvm/java-1.7.0-openjdk-amd64/"
 JAR="${JAVA_DISTR_HOME}/bin/jar"
-URL="http://axibase.com/public"
+URL="https://axibase.com/public"
 LATEST="$URL/atsd_ce_update_latest.htm"
 LATESTTAR="${DISTR_HOME}/bin/atsd_latest.tar.gz"
-atsdExecutable="${DISTR_HOME}/atsd/bin/atsd-executable.jar"
 revisionFile="applicationContext-common.xml"
-autoconfirm="true"
-autoatsd="true"
 
 function logger {
     echo "$1" | tee -a $UPDATELOG
 }
 
 
-logger "Checking curl ..."
-if ! which curl >/dev/null; then
-    logger "Curl is not installed. Please install it manually before continuing the update process."
-    exit 1
-fi
-
 logger "Starting ATSD update process ..."
-currentRevision=0
 lastRevision=0
 
 cd ${DISTR_HOME}/bin/
-currentRevision="`$JAR xf $atsdExecutable $revisionFile; cat $revisionFile | grep "revisionNumber" | sed 's/[^0-9]//g'; rm -f $revisionFile`"
-if [ "$currentRevision" = "" ]; then
-    logger "Can't define current version."
-    exit 1
-fi
-logger "Current version: $currentRevision"
-
 uri="`curl $LATEST | grep -o 'URL=.*\"' | sed 's/URL=//g' | sed 's/"//g'`"
 lastRevision="`echo $uri | sed 's/[^0-9]//g'`"
 if [ "$lastRevision" = "" ]; then
@@ -74,17 +53,14 @@ logger "Current version: $newRevision"
 logger "Replacing files ..."
 
 cd ${DISTR_HOME}/hbase/lib
-mv -f atsd.jar atsd.jar_old
-mv ${DISTR_HOME}/bin/target/atsd.jar ./
+mv -f atsd.jar atsd.jar_old && mv ${DISTR_HOME}/bin/target/atsd.jar ./
 
 cd ${DISTR_HOME}/atsd/bin/
-mv -f atsd-executable.jar atsd-executable.jar_old
-mv ${DISTR_HOME}/bin/target/atsd-executable.jar ./
+mv -f atsd-executable.jar atsd-executable.jar_old && mv ${DISTR_HOME}/bin/target/atsd-executable.jar ./
 
 rmdir ${DISTR_HOME}/bin/target
 
 logger "Files replaced."
-#/opt/atsd/install_user.sh
 
 #check timezone
 if [ -n "$timezone" ]; then
