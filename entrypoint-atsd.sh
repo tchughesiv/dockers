@@ -13,6 +13,7 @@ tar -xzf atsd_ee_hbase_${version}.tar.gz
 cp atsd/hbase/lib/atsd.jar ./hbase-${version}/lib/
 
 /entrypoint-hbase.sh > /dev/null &
+sleep 10 #make sure hbase is manage to start
 /home/axibase/atsd/atsd/bin/start-atsd.sh
 while ! curl localhost:8088 >/dev/null 2>&1; do echo "waiting to start ATSD server ..."; sleep 3; done
 
