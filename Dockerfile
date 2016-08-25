@@ -36,10 +36,14 @@ RUN /opt/atsd/install_user.sh && /opt/atsd/bin/atsd-all.sh stop
 
 
 #custom entrypoint to api-test reason
-ADD entrypoint.sh /
+ADD entrypoint-api-test.sh /
+
+USER root
+RUN chown -R axibase:axibase /opt/atsd /entrypoint*
+USER axibase
 
 #jmx, atsd(tcp), atsd(udp), pickle, http, https
 EXPOSE 1099 8081 8082/udp 8084 8088 8443
 VOLUME ["/opt/atsd"]
-ENTRYPOINT ["/bin/bash","/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash","/entrypoint-api-test.sh"]
 

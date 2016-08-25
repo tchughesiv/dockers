@@ -21,44 +21,18 @@ function logger {
 
 
 logger "Starting ATSD update process ..."
-lastRevision=0
 
 cd ${DISTR_HOME}/bin/
 uri="`curl $LATEST | grep -o 'URL=.*\"' | sed 's/URL=//g' | sed 's/"//g'`"
-lastRevision="`echo $uri | sed 's/[^0-9]//g'`"
-if [ "$lastRevision" = "" ]; then
-    logger "Can't define latest version."
-    exit 1
-fi
-logger "Latest version: $lastRevision"
-
-
 logger "Downloading revision $lastRevision from $URL/$uri"
 curl -o $LATESTTAR $URL/$uri 2>&1 | tee -a $UPDATELOG
-logger "ATSD revision $lastRevision downloaded to `readlink -f $LATESTTAR`"
-
-logger "Extracting ATSD ..."
 tar -xzvf $LATESTTAR -C ${DISTR_HOME}/bin/ >>$UPDATELOG 2>&1
-logger "ATSD extracted."
-rm -f $LATESTTAR
 newRevision="`$JAR xf ${DISTR_HOME}/bin/target/atsd-executable.jar $revisionFile; cat $revisionFile | grep "revisionNumber" | sed 's/[^0-9]//g'; rm -f $revisionFile`"
-if [ "$newRevision" = "" ]; then
-    logger "Can't define new version from jar file. Update stopped."
-    exit 1
-fi
 logger "Current version: $newRevision"
 
+cd ${DISTR_HOME}/hbase/lib && mv -f atsd.jar atsd.jar_old && mv ${DISTR_HOME}/bin/target/atsd.jar ./
 
-
-logger "Replacing files ..."
-
-cd ${DISTR_HOME}/hbase/lib
-mv -f atsd.jar atsd.jar_old && mv ${DISTR_HOME}/bin/target/atsd.jar ./
-
-cd ${DISTR_HOME}/atsd/bin/
-mv -f atsd-executable.jar atsd-executable.jar_old && mv ${DISTR_HOME}/bin/target/atsd-executable.jar ./
-
-rmdir ${DISTR_HOME}/bin/target
+cd ${DISTR_HOME}/atsd/bin/ && mv -f atsd-executable.jar atsd-executable.jar_old && mv ${DISTR_HOME}/bin/target/atsd-executable.jar ./
 
 logger "Files replaced."
 
