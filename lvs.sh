@@ -13,13 +13,13 @@ while sleep "$INTERVAL"; do
      f7=$(echo ${f7})
      f8=$(echo ${f8})
      if [[ $f4 =~ $re ]]; then
-        echo "PUTVAL $HOSTNAME/exec-$f1-$f2/gauge-lsize N:$f4";
+        echo "PUTVAL $HOSTNAME/lvs.lsize-$f2/gauge-$f1 N:$f4";
      fi
      if [[ $f7 =~ $re ]]; then
-        echo "PUTVAL $HOSTNAME/exec-$f1-$f2/gauge-data% N:$f7";
+        echo "PUTVAL $HOSTNAME/lvs.data%-$f2/gauge-$f1 N:$f7";
      fi
      if [[ $f8 =~ $re ]]; then
-         echo "PUTVAL $HOSTNAME/exec-$f1-$f2/gauge-meta% N:$f8";
+        echo "PUTVAL $HOSTNAME/lvs.meta%-$f2/gauge-$f1 N:$f8";
      fi
   done < <(sudo lvs --separator=, --units B)
 done
