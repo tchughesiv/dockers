@@ -10,6 +10,13 @@ This image collects statistics from Docker host (engine) and not from a containe
 docker build -t axibase/collectd .
 ```
 
+* Or download a pre-built image file from [axibase.com](https://axibase.com/public/docker-axibase-collectd.tar.gz) and load it into Docker:
+
+```
+docker load < docker-axibase-collectd.tar.gz
+```
+
+
 * Run Docker container in simple mode:
 
 ```ls
