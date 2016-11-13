@@ -53,8 +53,7 @@ RUN apt-get clean && apt-get update && apt-get install -y \
       rm -rf /tmp/* && \
       rm -rf /var/tmp/*
 
-RUN locale-gen en_US.UTF-8 \
-  && adduser --disabled-password --quiet --gecos "" axibase \
+RUN adduser --disabled-password --quiet --gecos "" axibase \
   && echo "axibase ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers
 WORKDIR /usr/src
 RUN git clone https://github.com/axibase/atsd-collectd-plugin.git -b df collectd
@@ -71,7 +70,7 @@ RUN make install
 RUN make clean
 COPY collectd.conf /etc/collectd/collectd.conf
 COPY lvs.sh /etc/collectd/lvs.sh
-RUN chmod +x lvs.sh
+RUN chmod +x /etc/collectd/lvs.sh
 ADD lvs.conf /
 ADD entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
