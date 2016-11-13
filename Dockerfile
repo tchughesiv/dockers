@@ -46,14 +46,18 @@ RUN apt-get clean && apt-get update && apt-get install -y \
       linux-libc-dev \
       pkg-config \
       protobuf-c-compiler \
-      python-dev && \
+      python-dev \
+      sudo && \
       rm -rf /usr/share/doc/* && \
       rm -rf /usr/share/info/* && \
       rm -rf /tmp/* && \
       rm -rf /var/tmp/*
 
+RUN locale-gen en_US.UTF-8 \
+  && adduser --disabled-password --quiet --gecos "" axibase \
+  && echo "axibase ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers
 WORKDIR /usr/src
-RUN git clone https://github.com/axibase/atsd-collectd-plugin.git collectd
+RUN git clone https://github.com/axibase/atsd-collectd-plugin.git -b df collectd
 WORKDIR /usr/src/collectd
 RUN ./build.sh
 RUN ./configure \
@@ -66,8 +70,10 @@ RUN make all
 RUN make install
 RUN make clean
 COPY collectd.conf /etc/collectd/collectd.conf
+COPY lvs.sh /etc/collectd/lvs.sh
+RUN chmod +x lvs.sh
+ADD lvs.conf /
 ADD entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
-
