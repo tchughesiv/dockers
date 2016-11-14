@@ -1,23 +1,36 @@
-## Collectd Docker Image
+# Collectd Docker Image
 
-This image collects statistics from Docker host (engine) and not from a container where it's launched.
+This image provides a Dockerized collectd configuration to gather operating system statistics from the underlying Docker host instead of a container where it's launched.
 
-### Send Statistics to Axibase Time Series Database
+The collectd agent started within the container is automatically configured to send metrics into your Axibase Time Series Database instance using the [write_atsd](https://github.com/axibase/atsd-collectd-plugin) plugin. The target ATSD instance is specified in the `--atsd-url` argument.
 
-* Build image:
+## Prepare Image
+
+### Build Image 
+
+* Download [Dockerfile](Dockerfile) to a Docker host connected to hub.docker.com
+
+* Build image
 
 ```
 docker build -t axibase/collectd .
 ```
 
-* Or download a pre-built image file from [axibase.com](https://axibase.com/public/docker-axibase-collectd.tar.gz) and load it into Docker:
+### Download Image
+
+* Download a pre-built image file from [axibase.com](https://axibase.com/public/docker-axibase-collectd.tar.gz)
+
+* Import the image into the Docker host
 
 ```
 docker load < docker-axibase-collectd.tar.gz
 ```
 
+## Start Container
 
-* Run Docker container in simple mode:
+### Basic Configuration
+
+* Start Docker container
 
 ```ls
 docker run -d -v /:/rootfs:ro --pid=host --net=host \
@@ -25,7 +38,9 @@ docker run -d -v /:/rootfs:ro --pid=host --net=host \
     --atsd-url=tcp://atsd_host:tcp_port
 ```
 
-* Run Docker container with additional lvs statistics:
+### `lvs` Configuration
+
+> This configuration gathers data from the `lvs` command and therefore requires additional privileges.
 
 ```ls
 docker run -d -v /:/rootfs:ro --privileged=true \
@@ -35,6 +50,6 @@ docker run -d -v /:/rootfs:ro --privileged=true \
     --lvs
 ```
 
-Details about collectd write_atsd plugin you can find at [write atsd page](https://github.com/axibase/atsd-collectd-plugin)
+### Credits
 
-Credits to [Carles Amigó](https://github.com/fr3nd/docker-collectd) for the idea to re-mount rootfs.
+* [Carles Amigó](https://github.com/fr3nd/docker-collectd) for the idea to re-mount rootfs.
