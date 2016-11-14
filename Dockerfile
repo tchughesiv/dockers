@@ -1,6 +1,10 @@
 FROM debian:jessie
 MAINTAINER Axibase, dev@axibase.com
-
+#metadata
+LABEL com.axibase.vendor="Axibase Corporation" \
+ com.axibase.product="collectd with write_atsd plugin" \
+ com.axibase.code="collectd-atsd" \
+ com.axibase.revision="5.6.1"
 
 RUN apt-get clean && apt-get update && apt-get install -y \
       autoconf \
