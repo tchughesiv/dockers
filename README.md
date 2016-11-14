@@ -6,7 +6,15 @@ The collectd agent started within the container is automatically configured to s
 
 ## Prepare Image
 
-### Build Image 
+### Docker Hub
+
+* Use an existing image published on [Docker Hub](https://hub.docker.com/r/axibase/collectd/)
+
+```
+docker pull axibase/collectd
+```
+
+### Build Image from Sources
 
 * Download [Dockerfile](Dockerfile) to a Docker host connected to hub.docker.com
 
