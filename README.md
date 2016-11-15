@@ -58,6 +58,20 @@ docker run -d -v /:/rootfs:ro --privileged=true \
     --lvs
 ```
 
+#### Tags encoding
+
+Script used in `exec` plugin send plain text protocol `PUTVAL` commands to Collectd in the following format:
+
+
+```ls
+PUTVAL $HOSTNAME/exec-plugin/gauge-tag_key1=tag_value1;tag_key1=tag_value1 N:1479189638358
+```
+
+* tag keys and values are specified in `type_instance` field
+* each pair of key and value inside should be delimited by equals sign
+* pairs between each other should be separated by semicolons
+* if there is at least one pair without equal sign then type_instance set to one tag with key `instance`
+
 ### Credits
 
 * [Carles Amigó](https://github.com/fr3nd/docker-collectd) for the idea to re-mount rootfs.
