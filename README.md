@@ -2,7 +2,9 @@
 
 This image provides a Dockerized collectd configuration to gather operating system statistics from the underlying Docker host instead of a container where it's launched.
 
-The collectd agent started within the container is automatically configured to send metrics into your Axibase Time Series Database instance using the [write_atsd](https://github.com/axibase/atsd-collectd-plugin) plugin. The target ATSD instance is specified in the `--atsd-url` argument.
+The collectd agent started within the container is automatically configured to send metrics into an Axibase Time Series Database instance using the [write_atsd](https://github.com/axibase/atsd-collectd-plugin) plugin. 
+
+The target ATSD instance is specified in the `--atsd-url` argument.
 
 ## Prepare Image
 
@@ -48,7 +50,7 @@ docker run -d -v /:/rootfs:ro --pid=host --net=host \
 
 ### `lvs` Configuration
 
-> This configuration gathers data from the `lvs` command and therefore requires additional privileges.
+This configuration reads `lvs` command output and therefore must be launched with elevated privileges. The collected data is useful when docker is configured in [`direct-lvm`](https://docs.docker.com/engine/userguide/storagedriver/device-mapper-driver/#/configure-direct-lvm-mode-for-production) mode. 
 
 ```ls
 docker run -d -v /:/rootfs:ro --privileged=true \
@@ -58,19 +60,41 @@ docker run -d -v /:/rootfs:ro --privileged=true \
     --lvs
 ```
 
-#### Tags encoding
-
-Script used in `exec` plugin send plain text protocol `PUTVAL` commands to Collectd in the following format:
-
+The `lvs` output is processed with `lvs.sh` script, invoked by the collectd's native [`exec`](https://collectd.org/documentation/manpages/collectd-exec.5.shtml) plugin. The `lvs.sh` script reads the output into a tabular structure and generates `PUTVAL` commands containing LVM statistics for each logical volume:
 
 ```ls
-PUTVAL $HOSTNAME/exec-plugin/gauge-tag_key1=tag_value1;tag_key1=tag_value1 N:1479189638358
+PUTVAL nurswgdkr001/exec-lvs-data%/gauge-volume_group=vg0;logical_volume=thinpool N:4.52
 ```
 
-* tag keys and values are specified in `type_instance` field
-* each pair of key and value inside should be delimited by equals sign
-* pairs between each other should be separated by semicolons
-* if there is at least one pair without equal sign then type_instance set to one tag with key `instance`
+## `exec` Plugin Processing
+
+The [`exec`](https://collectd.org/documentation/manpages/collectd-exec.5.shtml) plugin invokes a custom script that  generates `PUTVAL` commands targeting the following format: 
+
+```ls
+PUTVAL $HOSTNAME/exec-{plugin-instance}/gauge-{type-instance} N:{value}
+```
+
+The `PUTVAL` commands are then parsed by the collectd daemon and are converted by the `write_atsd` plugin into ATSD's network API commands.
+
+```ls
+series e:$HOSTNAME m:collectd.{plugin-instance}={value} t:instance={type-instance}
+```
+
+However, if the `{type-instance}` field contains `;`-separated key=value pairs, the `write_atsd` plugin performs additional processing of this field to split it into separate series tags.
+
+```ls
+PUTVAL $HOSTNAME/exec-{plugin-instance}/gauge-{tag_key1=tag_value1;tag_key2=tag_value2} N:1479189638358
+```
+
+```ls
+series e:$HOSTNAME m:collectd.{plugin-instance}={value} t:tag_key1=tag_value1 t:tag_key2=tag_value2
+```
+
+This processing is enabled subject to the following conditions:
+
+* The `type_instance` field contains an equal sign.
+* Each key/value pair consists of key, followed by equal sign, followed by value.
+* Key/value pairs should be separated by semicolon `;`.
 
 ### Credits
 
