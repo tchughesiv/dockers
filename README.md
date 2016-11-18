@@ -45,8 +45,12 @@ docker load < docker-axibase-collectd.tar.gz
 ```ls
 docker run -d -v /:/rootfs:ro --pid=host --net=host \
     --name=collectd axibase/collectd \
-    --atsd-url=tcp://atsd_host:tcp_port
+    --atsd-url=tcp://atsd_host:tcp_port \
+    --fqdn=false
 ```
+
+* The `fqdn` option is used to set Collectd [FQDNLookup](https://collectd.org/wiki/index.php/FQDNLookup) setting. It controls how a hostname is chosen. When enabled, the hostname of the node is set to the fully qualified domain name 
+
 
 ### `lvs` Configuration
 
@@ -57,6 +61,7 @@ docker run -d -v /:/rootfs:ro --privileged=true \
     --pid=host --net=host \
     --name=collectd axibase/collectd \
     --atsd-url=tcp://atsd_host:tcp_port \
+    --fqdn=false
     --lvs
 ```
 
