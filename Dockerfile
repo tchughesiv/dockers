@@ -31,6 +31,9 @@ RUN sed -i '52,55 s/^/#/' /opt/atsd/bin/atsd-all.sh && \
 ADD hbase-site.xml /opt/atsd/hbase/conf/
 ADD rules.xml /opt/atsd/
 
+#disable sql wait period
+RUN echo "last.insert.write.period.seconds=0" >> /opt/atsd/atsd/conf/server.properties
+
 #prepare database
 RUN /opt/atsd/install_user.sh && /opt/atsd/bin/atsd-all.sh stop
 
