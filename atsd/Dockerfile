@@ -20,9 +20,6 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys 26AEE425A5796
 USER axibase
 RUN sed -i '/.*hbase.cluster.distributed.*/{n;s/.*/   <value>false<\/value>/}' /opt/atsd/hbase/conf/hbase-site.xml
 
-#prepare database
-#RUN /opt/atsd/install_user.sh && /opt/atsd/bin/atsd-all.sh stop
-
 #jmx, atsd(tcp), atsd(udp), pickle, http, https
 EXPOSE 1099 8081 8082/udp 8084 8088 8443
 VOLUME ["/opt/atsd"]
