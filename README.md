@@ -74,3 +74,11 @@ PUTVAL nurswgdkr001/exec-lvs-data%/gauge-volume_group=vg0;logical_volume=thinpoo
 ### Credits
 
 * [Carles Amigó](https://github.com/fr3nd/docker-collectd) for the idea to re-mount rootfs.
+
+### Troubleshooting
+
+If there are some problems grep collectd logs for errors to find out the reason:
+
+```ls
+docker exec -it collectd cat /var/log/collectd.log | grep error
+```
