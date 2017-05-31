@@ -24,8 +24,8 @@ RUN sed -i '/.*hbase.cluster.distributed.*/{n;s/.*/   <value>false<\/value>/}' /
 #comment out hadoop usage, stop checking hbase
 RUN sed -i '52,55 s/^/#/' /opt/atsd/bin/atsd-all.sh && \
 	sed -i '62,65 s/^/#/' /opt/atsd/bin/atsd-all.sh && \
-	sed -i '289 s/^/#/' /opt/atsd/bin/atsd-hbase.sh && \
-	sed -i '305,65 s/^/#/' /opt/atsd/bin/atsd-hbase.sh
+	sed -i '300 s/^/#/' /opt/atsd/bin/atsd-hbase.sh && \
+	sed -i '316,65 s/^/#/' /opt/atsd/bin/atsd-hbase.sh
 
 #put script to docker
 ADD hbase-site.xml /opt/atsd/hbase/conf/
