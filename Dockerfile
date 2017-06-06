@@ -1,7 +1,7 @@
 FROM ubuntu:14.04
 MAINTAINER ATSD Developers <dev-atsd@axibase.com>
 ENV version 1.0.3
-env JAVA_HOME /usr/lib/jvm/java-1.7.0-openjdk-amd64
+env JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk-amd64
 #metadata
 LABEL com.axibase.vendor="Axibase Corporation" \
   com.axibase.product="Axibase Time Series Database" 
@@ -15,7 +15,7 @@ ADD https://www.apache.org/dist/hbase/hbase-${version}/hbase-${version}-bin.tar.
 RUN tar -xzf ./hbase-${version}-bin.tar.gz \
     && rm -f ./hbase-${version}-bin.tar.gz \
     && apt-get update \
-    && apt-get install -y openjdk-7-jdk
+    && apt-get install -y openjdk-8-jdk
 
 ADD hbase-site.xml ./hbase-${version}/conf/
 ADD hbase-env.sh ./hbase-${version}/conf/
