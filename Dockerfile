@@ -6,6 +6,8 @@ env JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk-amd64
 LABEL com.axibase.vendor="Axibase Corporation" \
   com.axibase.product="Axibase Time Series Database" 
 
+RUN apt-get update && apt-get install -y locales
+
 RUN locale-gen en_US.UTF-8 \
   && adduser --disabled-password --quiet --gecos "" axibase
 
