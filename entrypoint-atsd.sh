@@ -10,7 +10,7 @@ fi
 
 curl -O https://axibase.com/public/atsd_ee_hbase_${version}.tar.gz 
 tar -xzf atsd_ee_hbase_${version}.tar.gz
-cp atsd/hbase/lib/atsd.jar ./hbase-${version}/lib/
+cp atsd/hbase/lib/atsd-hbase.*.jar ./hbase-${version}/lib/
 
 /entrypoint-hbase.sh > /dev/null &
 sleep 10 #make sure hbase is manage to start
