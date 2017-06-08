@@ -8,8 +8,8 @@ if [ -z "$axiname" ] || [ -z "$axipass" ]; then
 	exit 1
 fi
 
-curl -O https://axibase.com/public/atsd_ee_hbase_${version}.tar.gz 
-tar -xzf atsd_ee_hbase_${version}.tar.gz
+curl -O https://axibase.com/public/atsd_ee_hbase_1.2.0.tar.gz
+tar -xzf atsd_ee_hbase_1.2.0.tar.gz
 cp atsd/hbase/lib/atsd-hbase.*.jar ./hbase-${version}/lib/
 
 /entrypoint-hbase.sh > /dev/null &
