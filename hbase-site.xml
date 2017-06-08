@@ -35,6 +35,6 @@
     </property>
     <property>
         <name>hbase.coprocessor.region.classes</name>
-        <value>com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint, com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint, org.apache.hadoop.hbase.coprocessor.example.BulkDeleteEndpoint</value>
+        <value>com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint, com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint, com.axibase.tsd.hbase.coprocessor.MessagesStatsEndpoint</value>
     </property>
 </configuration>

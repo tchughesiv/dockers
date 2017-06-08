@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 MAINTAINER ATSD Developers <dev-atsd@axibase.com>
-ENV version 1.2.0
+ENV version 1.2.0-cdh5.10.1
 env JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk-amd64
 #metadata
 LABEL com.axibase.vendor="Axibase Corporation" \
@@ -12,10 +12,10 @@ RUN locale-gen en_US.UTF-8 \
   && adduser --disabled-password --quiet --gecos "" axibase
 
 WORKDIR /home/axibase/
-ADD https://archive.apache.org/dist/hbase/${version}/hbase-${version}-bin.tar.gz .
+ADD https://archive.cloudera.com/cdh5/cdh/5/hbase-${version}.tar.gz .
 
-RUN tar -xzf ./hbase-${version}-bin.tar.gz \
-    && rm -f ./hbase-${version}-bin.tar.gz \
+RUN tar -xzf ./hbase-${version}.tar.gz \
+    && rm -f ./hbase-${version}.tar.gz \
     && apt-get update \
     && apt-get install -y openjdk-8-jdk
 
