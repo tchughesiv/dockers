@@ -8,11 +8,14 @@ LABEL com.axibase.vendor="Axibase Corporation" \
   com.axibase.function="database" \
   com.axibase.platform="linux"
 
+COPY help.md /tmp/
 
 #install atsd rpm with yum
 RUN printf "[axibase]\nname=Axibase Repository\nbaseurl=https://axibase.com/public/repository/rpm\nenabled=1\ngpgcheck=0\nprotect=1" >> /etc/yum.repos.d/axibase.repo &&\
+    INSTALL_PKGS="atsd golang-github-cpuguy83-go-md2man" &&\
     yum update -y &&\
-    yum install -y atsd &&\
+    yum install -y ${INSTALL_PKGS} &&\
+    go-md2man -in /tmp/help.md -out /help.1 &&\
     yum clean all
 
 USER axibase
