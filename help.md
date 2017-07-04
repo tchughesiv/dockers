@@ -3,7 +3,7 @@
 % June 26, 2017
 
 # DESCRIPTION
-Axibase Time Series Database to store and analyze time series data at scale. 
+Axibase Time Series Database: store and analyze time series data at scale. 
 
 # USAGE
 ## Start Container

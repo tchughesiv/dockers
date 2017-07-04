@@ -1,0 +1,145 @@
+.TH "axibase/atsd:rhel7" "Axibase Corporation" "June 26, 2017"  ""
+
+
+.SH DESCRIPTION
+.PP
+Axibase Time Series Database: store and analyze time series data at scale.
+
+
+.SH USAGE
+.SH Start Container
+.PP
+Execute the command as described above.
+
+.PP
+.RS
+
+.nf
+axibase@nurswghbs002 \~]# docker run \\
+>   \-\-detach \\
+>   \-\-name=atsd \\
+>   \-\-restart=always \\
+>   \-\-publish 8088:8088 \\
+>   \-\-publish 8443:8443 \\
+>   \-\-publish 8081:8081 \\
+>   \-\-publish 8082:8082/udp \\
+>   \-\-env COLLECTOR\_USER\_NAME=data\-agent \\
+>   \-\-env COLLECTOR\_USER\_PASSWORD=Pwd78\_ \\
+>   axibase/atsd:rhel7
+Unable to find image 'axibase/atsd:rhel7' locally
+latest: Pulling from axibase/atsd
+bf5d46315322: Pull complete
+9f13e0ac480c: Pull complete
+e8988b5b3097: Pull complete
+40af181810e7: Pull complete
+e6f7c7e5c03e: Pull complete
+ca48528e7708: Pull complete
+de225e971cf6: Pull complete
+6a3419ba188d: Pull complete
+Digest: sha256:f2c2957b1ffc8dbb24501495e98981899d2b018961a7742ff6adfd4f1e176429
+Status: Downloaded newer image for axibase/atsd:rhel7
+14d1f27bf0c139027b5f69009c0c5007d35be92d61b16071dc142fbc75acb36a
+
+.fi
+.RE
+
+.PP
+It may take up to 5 minutes to initialize the database.
+
+.SH Check Installation
+.PP
+.RS
+
+.nf
+docker logs \-f atsd
+
+.fi
+.RE
+
+.PP
+You should see an \fIATSD start completed\fP message at the end of the \fB\fCstart.log\fR file.
+
+.PP
+.RS
+
+.nf
+...
+ * [ATSD] Starting ATSD ...
+ * [ATSD] ATSD not running.
+ * [ATSD] ATSD java version "1.7.0\_111"
+ * [ATSD] Waiting for ATSD to start. Checking ATSD web\-interface port 8088 ...
+ * [ATSD] Waiting for ATSD to bind to port 8088 ...( 1 of 20 )
+...
+ * [ATSD] Waiting for ATSD to bind to port 8088 ...( 11 of 20 )
+ * [ATSD] ATSD web interface:
+...
+ * [ATSD] http://172.17.0.2:8088
+ * [ATSD] https://172.17.0.2:8443
+ * [ATSD] ATSD start completed.
+
+.fi
+.RE
+
+.PP
+ATSD web interface is accessible on port 8088/http and 8443/https.
+
+.SH Launch Parameters.TS
+allbox;
+\fBName\fP  \fBRequired\fP  \fBDescription\fP 
+\fB\fC\-\-detach\fR		Yes		Run container in background and print container id.	
+
+\fB\fC\-\-hostname\fR		No		Assign hostname to the container.	
+
+\fB\fC\-\-name\fR		No		Assign a unique name to the container.	
+
+\fB\fC\-\-restart\fR		No		Auto\-restart policy. \fINot supported in all Docker Engine versions.\fP	
+
+\fB\fC\-\-publish\fR		No		Publish a container's port to the host.	
+
+\fB\fC\-\-env COLLECTOR\_USER\_NAME\fR		No		User name for a data collector account.	
+
+\fB\fC\-\-env COLLECTOR\_USER\_PASSWORD\fR		No		Password for a data collector account, subject to 
+\[la]../administration/user-authentication.md#password-requirements\[ra].	
+
+\fB\fC\-\-env COLLECTOR\_USER\_TYPE\fR		No		User group for a data collector account, default value is \fB\fCwriter\fR.	
+
+.TE
+
+.SH Exposed Ports.IP \n+[step]
+
+\item 8088 – http
+\item 8443 – https
+\item 8081 – 
+\[la]../api/network#network-api\[ra]
+\item 8082 – 
+\[la]../api/network#udp-datagrams\[ra]
+.SH Port Mappings
+.PP
+Depending on your Docker host network configuration, you may need to change port mappings in case some of the published ports are already taken.
+
+.PP
+.RS
+
+.nf
+Cannot start container <container\_id>: failed to create endpoint atsd on network bridge:
+Bind for 0.0.0.0:8088 failed: port is already allocated
+
+.fi
+.RE
+
+.PP
+.RS
+
+.nf
+docker run \\
+  \-\-detach \\
+  \-\-name=atsd \\
+  \-\-restart=always \\
+  \-\-publish 9088:8088 \\
+  \-\-publish 9443:8443 \\
+  \-\-publish 9081:8081 \\
+  \-\-publish 9082:8082/udp \\
+  axibase/atsd:rhel7
+
+.fi
+.RE
