@@ -28,19 +28,6 @@ RUN REPOLIST=rhel-7-server-rpms,axibase &&\
     yum -y install --disablerepo "*" --enablerepo ${REPOLIST} --setopt=tsflags=nodocs atsd && \
     yum clean all
 
-#user name recognition at runtime w/ an arbitrary uid - for OpenShift deployments
-COPY uid_entrypoint.sh /opt/atsd/bin/
-RUN usermod -d /opt/atsd -g 0 axibase &&\
-    sed "s@axibase:x:`id axibase -u`:@axibase:x:\${USER_ID}:@g" /etc/passwd > /etc/passwd.template &&\
-    STAT_VARS="DISTRHOME ATSD_START DFS_START ATSD_TSD HBASE_START" &&\
-    for i in ${STAT_VARS}; do grep -ir "stat -c %U \"\$$i\"" /opt/atsd/ |\
-      awk -F ':' '{print $1}' | uniq | xargs sed -i "s/stat -c %U \"\$$i\"/whoami/g"; done &&\
-    grep -ir "stat -c %U /tmp/hsperfdata_$dfs_user" /opt/atsd/ |\
-      awk -F ':' '{print $1}' | uniq | xargs sed -i "s@stat -c %U /tmp/hsperfdata_\$dfs_user@whoami@g" &&\
-    chown -R axibase:0 /opt/atsd &&\
-    chmod -R u+x /opt/atsd/bin &&\
-    chmod -R g=u /opt/atsd /etc/passwd
-
 USER axibase
 
 #set hbase distributed mode false
@@ -48,7 +35,6 @@ RUN sed -i '/.*hbase.cluster.distributed.*/{n;s/.*/   <value>false<\/value>/}' /
 
 #jmx, atsd(tcp), atsd(udp), pickle, http, https
 EXPOSE 1099 8081 8082/udp 8084 8088 8443
-VOLUME /opt/atsd/hdfs-cache /opt/atsd/hdfs-data /opt/atsd/hdfs-data-name
+VOLUME /opt/atsd
 
-ENTRYPOINT ["/bin/bash","/opt/atsd/bin/uid_entrypoint.sh"]
-CMD ["/opt/atsd/bin/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash","/opt/atsd/bin/entrypoint.sh"]

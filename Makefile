@@ -23,14 +23,9 @@ lint:
 	dockerfile_lint -f Dockerfile.centos7
 
 test:
-	$(eval CONTAINERID=$(shell docker run -tdi -u $(shell shuf -i 1000010000-1000020000 -n 1) \
-	--cap-drop=KILL \
-	--cap-drop=MKNOD \
-	--cap-drop=SYS_CHROOT \
-	--cap-drop=SETUID \
-	--cap-drop=SETGID \
+	$(eval CONTAINERID=$(shell docker run -tdi \
 	${CONTEXT}/${IMAGE_NAME}:${TARGET}-${VERSION}))
-	@sleep 3
+	@sleep 20
 	@docker exec ${CONTAINERID} ps aux
 	@docker logs ${CONTAINERID}
 	@docker rm -f ${CONTAINERID}
@@ -48,15 +43,6 @@ openshift-test:
 	sleep 5
 	oc describe pod `oc get pod --template '{{(index .items 0).metadata.name }}'`
 	oc exec `oc get pod --template '{{(index .items 0).metadata.name }}'` ps aux
-
-run:
-	docker run -tdi -u $(shell shuf -i 1000010000-1000020000 -n 1) \
-	--cap-drop=KILL \
-	--cap-drop=MKNOD \
-	--cap-drop=SYS_CHROOT \
-	--cap-drop=SETUID \
-	--cap-drop=SETGID \
-	${CONTEXT}/${IMAGE_NAME}:${TARGET}-${VERSION}
 
 clean:
 	rm -f build
