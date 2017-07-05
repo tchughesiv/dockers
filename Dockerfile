@@ -35,6 +35,5 @@ RUN sed -i '/.*hbase.cluster.distributed.*/{n;s/.*/   <value>false<\/value>/}' /
 
 #jmx, atsd(tcp), atsd(udp), pickle, http, https
 EXPOSE 1099 8081 8082/udp 8084 8088 8443
-VOLUME /opt/atsd
 
 ENTRYPOINT ["/bin/bash","/opt/atsd/bin/entrypoint.sh"]
