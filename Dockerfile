@@ -12,10 +12,21 @@ LABEL com.axibase.vendor="Axibase Corporation" \
       com.axibase.platform="linux" \
       name="axibase/atsd" \
       vendor="Axibase Corporation" \
-      version="16717" \
-      release="1" \
+      version="16741" \
+      release="2" \
       summary="Axibase Time Series Database" \
-      description="Axibase will ....."
+      description="High-performance database for time-series data with built-in SQL, rule-engine, and visualization." \
+      url="https://www.axibase.com" \
+      run="docker run \
+      --detach \
+      --name=atsd \
+      --restart=always \
+      --publish 8088:8088 \
+      --publish 8443:8443 \
+      --publish 8081:8081 \
+      --publish 8082:8082/udp \
+      axibase/atsd:16741" \
+      stop="docker stop atsd"
 
 COPY help.1 /
 COPY licenses /licenses
@@ -35,5 +46,6 @@ RUN sed -i '/.*hbase.cluster.distributed.*/{n;s/.*/   <value>false<\/value>/}' /
 
 #jmx, atsd(tcp), atsd(udp), pickle, http, https
 EXPOSE 1099 8081 8082/udp 8084 8088 8443
+VOLUME ["/opt/atsd"]
 
 ENTRYPOINT ["/bin/bash","/opt/atsd/bin/entrypoint.sh"]
